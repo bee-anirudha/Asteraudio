@@ -262,3 +262,33 @@
   .main.has-order .detail-panel>div{padding:0 5px}
   .main.has-order .detail-panel strong{font-size:10px}
 }
+
+.account-wrap{position:relative;margin-left:11px;padding-left:16px;border-left:1px solid #e7e3e9}
+.account-trigger{display:flex;align-items:center;gap:9px;padding:3px 0 3px 3px;background:transparent;border:0;color:#292630;font-size:12px;font-weight:700;white-space:nowrap}
+.account-trigger:focus-visible,.account-action:focus-visible{outline:3px solid #a99be5;outline-offset:3px;border-radius:6px}
+.avatar-img{width:32px;height:32px;object-fit:cover;object-position:center 34%;border-radius:50%;border:2px solid #ece7f4}
+.account-trigger.signed-out .avatar-img{filter:grayscale(1);opacity:.5}
+.account-chevron{font-size:18px;color:#837b8b;line-height:1;margin-left:2px;transition:transform .18s}
+.account-trigger[aria-expanded="true"] .account-chevron{transform:rotate(180deg)}
+.account-menu{position:absolute;top:calc(100% + 13px);right:0;z-index:30;width:284px;padding:10px;background:#fff;border:1px solid #e8e4e9;border-radius:12px;box-shadow:0 20px 48px #25203527;color:#292630;font-size:12px}
+.account-menu[hidden],#account-signed-in[hidden],#account-signed-out[hidden]{display:none}
+.account-person{display:flex;align-items:center;gap:12px;padding:9px 9px 13px}
+.account-photo{width:43px;height:43px;object-fit:cover;object-position:center 34%;border-radius:50%}
+.account-person>div,.account-signed-out-heading{display:flex;flex-direction:column;gap:4px}
+.account-person strong,.account-signed-out-heading strong{font-size:13px}
+.account-person span,.account-signed-out-heading span,.account-address span{color:#817a86;font-size:11px}
+.account-address{display:flex;flex-direction:column;gap:5px;margin:0 6px;padding:13px 5px;border-top:1px solid #efecf0;border-bottom:1px solid #efecf0}
+.account-address strong{font-size:11px;font-weight:600}
+.account-action{display:flex;align-items:center;justify-content:space-between;width:100%;padding:11px 10px;border:0;border-radius:7px;background:#fff;text-align:left;color:#332b47;font-size:12px;font-weight:600}
+.account-action:hover:not(:disabled){background:#f6f3fb}
+.account-action:disabled{color:#aaa4ae;cursor:default}
+.account-action.sign-out{color:#6f5362;border-top:1px solid #efecf0;border-radius:0;margin-top:3px}
+.account-signed-out-heading{padding:12px 10px 16px;line-height:1.4}
+.shell.signed-out .customer-info,.shell.signed-out .wallet-card{display:none}
+.shell.signed-out .pay-button{justify-content:center}
+@media(max-width:570px){
+  .account-wrap{margin-left:4px;padding-left:10px}
+  .account-trigger{font-size:12px}
+  .account-trigger .avatar-img{width:30px;height:30px}
+  .account-menu{width:min(284px,calc(100vw - 28px));right:-2px}
+}

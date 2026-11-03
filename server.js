@@ -130,10 +130,10 @@ async function webhook(req, res) {
 }
 
 async function staticFile(urlPath, res) {
-  const files = { '/': 'index.html', '/styles.css': 'styles.css', '/app.js': 'app.js', '/product.svg': 'product.svg' };
+  const files = { '/': 'index.html', '/styles.css': 'styles.css', '/app.js': 'app.js', '/product.svg': 'product.svg', '/alex-morgan.png': 'alex-morgan.png' };
   const name = files[urlPath];
   if (!name) return json(res, 404, { error: 'Not found' });
-  const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml' };
+  const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png' };
   const content = await fs.readFile(path.join(publicDir, name));
   res.writeHead(200, { 'Content-Type': types[path.extname(name)], 'Cache-Control': 'no-store' });
   res.end(content);

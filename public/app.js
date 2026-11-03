@@ -6,11 +6,31 @@ const main = document.querySelector('.main');
 const couponForm = document.getElementById('coupon-form');
 const couponInput = document.getElementById('coupon-code');
 const couponFeedback = document.getElementById('coupon-feedback');
+const accountWrap = document.getElementById('account-wrap');
+const accountTrigger = document.getElementById('account-trigger');
+const accountMenu = document.getElementById('account-menu');
 let activeOrderId = null;
 let currentOrder = null;
 let appliedCoupon = null;
+let signedIn = sessionStorage.getItem('aster-signed-out') !== 'true';
 
 function text(id, value) { document.getElementById(id).textContent = value; }
+function setMenuOpen(open) {
+  accountMenu.hidden = !open;
+  accountTrigger.setAttribute('aria-expanded', String(open));
+}
+function updateAccountUi() {
+  document.querySelector('.shell').classList.toggle('signed-out', !signedIn);
+  accountTrigger.classList.toggle('signed-out', !signedIn);
+  text('account-trigger-label', signedIn ? 'Alex Morgan' : 'Sign in');
+  document.getElementById('account-signed-in').hidden = !signedIn;
+  document.getElementById('account-signed-out').hidden = signedIn;
+  document.getElementById('account-order').disabled = !currentOrder?.orderId;
+  text('shipping-name', signedIn ? 'Alex Morgan' : 'Sign in to view');
+  text('payment-method-name', signedIn ? 'Acme Pay Wallet' : 'Sign in to use your wallet');
+  text('pay-label', signedIn ? 'Place order' : 'Sign in to place order');
+  document.querySelector('.button-right').hidden = !signedIn;
+}
 function updatePricing() {
   const discounted = appliedCoupon === 'ASTER10';
   document.getElementById('discount-row').hidden = !discounted;
@@ -31,6 +51,7 @@ function step(name, state) {
 
 function render(order) {
   currentOrder = order;
+  updateAccountUi();
   if (order?.orderId) {
     appliedCoupon = order.couponCode || null;
     couponInput.value = appliedCoupon || '';
@@ -85,6 +106,41 @@ function render(order) {
   }
 }
 
+accountTrigger.addEventListener('click', () => setMenuOpen(accountMenu.hidden));
+document.addEventListener('click', (event) => {
+  if (!accountWrap.contains(event.target)) setMenuOpen(false);
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !accountMenu.hidden) {
+    setMenuOpen(false);
+    accountTrigger.focus();
+  }
+});
+document.getElementById('account-order').addEventListener('click', () => {
+  setMenuOpen(false);
+  if (!currentOrder?.orderId) return;
+  if (window.matchMedia('(min-width: 800px)').matches) window.scrollTo({ top: 0, behavior: 'smooth' });
+  else journeyScene.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+document.getElementById('account-sign-out').addEventListener('click', () => {
+  signedIn = false;
+  sessionStorage.setItem('aster-signed-out', 'true');
+  activeOrderId = null;
+  render(null);
+  setMenuOpen(false);
+  accountTrigger.focus();
+});
+document.getElementById('account-sign-in').addEventListener('click', async () => {
+  signedIn = true;
+  sessionStorage.removeItem('aster-signed-out');
+  setMenuOpen(false);
+  accountTrigger.focus();
+  const orders = await fetch('/api/orders').then(response => response.json()).catch(() => []);
+  const latest = orders.at(-1) || null;
+  activeOrderId = latest?.orderId || null;
+  render(latest);
+});
+
 couponForm.addEventListener('submit', (event) => {
   event.preventDefault();
   if (appliedCoupon) {
@@ -105,6 +161,11 @@ couponForm.addEventListener('submit', (event) => {
 });
 
 payButton.addEventListener('click', async () => {
+  if (!signedIn) {
+    setMenuOpen(true);
+    accountTrigger.focus();
+    return;
+  }
   activeOrderId = null;
   render({ status: 'processing', couponCode: appliedCoupon });
   const scrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
@@ -138,12 +199,14 @@ resetButton.addEventListener('click', async () => {
 const events = new EventSource('/api/events');
 events.onmessage = (event) => {
   const order = JSON.parse(event.data);
-  if (order.orderId === activeOrderId) render(order);
+  if (signedIn && order.orderId === activeOrderId) render(order);
 };
 events.addEventListener('reset', () => render(null));
 
 fetch('/api/orders').then(r => r.json()).then(orders => {
+  if (!signedIn) return;
   const latest = orders.at(-1) || null;
   activeOrderId = latest?.orderId || null;
   render(latest);
 });
+updateAccountUi();
