@@ -5,6 +5,7 @@ const path = require('node:path');
 const PORT = Number(process.env.PORT || 4173);
 const BEECEPTOR_PAYMENTS_URL = process.env.BEECEPTOR_PAYMENTS_URL || '';
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || '';
+const CONFIRMATION_TOKEN = process.env.CONFIRMATION_TOKEN || '';
 const publicDir = path.join(__dirname, 'public');
 const orders = new Map();
 const clients = new Set();
@@ -121,8 +122,7 @@ async function processPayment(order) {
   }
 }
 
-async function webhook(req, res) {
-  if (WEBHOOK_SECRET && req.headers['x-demo-secret'] !== WEBHOOK_SECRET) return json(res, 401, { error: 'Invalid webhook secret.' });
+async function confirmOrder(req, res) {
   const payload = await readJson(req);
   const orderId = payload?.data?.orderId;
   const order = orders.get(orderId);
@@ -139,6 +139,17 @@ async function webhook(req, res) {
   order.webhookReceivedAt = new Date().toISOString();
   publish(orderView(order));
   return json(res, 200, { received: true, orderId });
+}
+
+async function directWebhook(req, res) {
+  if (WEBHOOK_SECRET && req.headers['x-demo-secret'] !== WEBHOOK_SECRET) return json(res, 401, { error: 'Invalid webhook secret.' });
+  return confirmOrder(req, res);
+}
+
+async function backendConfirmation(req, res) {
+  if (!CONFIRMATION_TOKEN) return json(res, 503, { error: 'Confirmation service is not configured.' });
+  if (req.headers['x-confirmation-token'] !== CONFIRMATION_TOKEN) return json(res, 401, { error: 'Invalid confirmation token.' });
+  return confirmOrder(req, res);
 }
 
 async function staticFile(urlPath, res) {
@@ -164,7 +175,8 @@ http.createServer(async (req, res) => {
       return;
     }
     if (req.method === 'POST' && url.pathname === '/api/checkout') return await checkout(req, res);
-    if (req.method === 'POST' && url.pathname === '/webhooks/payments') return await webhook(req, res);
+    if (req.method === 'POST' && url.pathname === '/webhooks/payments') return await directWebhook(req, res);
+    if (req.method === 'POST' && url.pathname === '/api/payment-confirmations') return await backendConfirmation(req, res);
     if (req.method === 'POST' && url.pathname === '/api/reset') {
       orders.clear();
       for (const client of clients) client.write('event: reset\ndata: {}\n\n');

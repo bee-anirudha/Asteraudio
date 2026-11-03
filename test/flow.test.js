@@ -26,7 +26,7 @@ test('acknowledgment and webhook are separate payment stages', async () => {
   const appPort = beeceptorPort + 1;
   const app = spawn(process.execPath, ['server.js'], {
     cwd: __dirname + '/..',
-    env: { ...process.env, PORT: String(appPort), BEECEPTOR_PAYMENTS_URL: `http://127.0.0.1:${beeceptorPort}/payments` },
+    env: { ...process.env, PORT: String(appPort), BEECEPTOR_PAYMENTS_URL: `http://127.0.0.1:${beeceptorPort}/payments`, CONFIRMATION_TOKEN: 'local-test-token' },
     stdio: 'ignore',
   });
   const base = `http://127.0.0.1:${appPort}`;
@@ -48,13 +48,16 @@ test('acknowledgment and webhook are separate payment stages', async () => {
     }
     assert.equal(orders[0].paymentId, 'PAY-9001');
 
-    const wrong = await fetch(`${base}/webhooks/payments`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event: 'payment.completed', data: { orderId: 'ORD-1042', paymentId: 'OTHER', amount: '49.99', currency: 'USD', status: 'succeeded' } }) });
+    const unauthorized = await fetch(`${base}/api/payment-confirmations`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event: 'payment.completed', data: { orderId: 'ORD-1042', paymentId: 'PAY-9001', amount: '49.99', currency: 'USD', status: 'succeeded' } }) });
+    assert.equal(unauthorized.status, 401);
+    const confirmationHeaders = { 'Content-Type': 'application/json', 'X-Confirmation-Token': 'local-test-token' };
+    const wrong = await fetch(`${base}/api/payment-confirmations`, { method: 'POST', headers: confirmationHeaders, body: JSON.stringify({ event: 'payment.completed', data: { orderId: 'ORD-1042', paymentId: 'OTHER', amount: '49.99', currency: 'USD', status: 'succeeded' } }) });
     assert.equal(wrong.status, 409);
     orders = await (await fetch(`${base}/api/orders`)).json();
     assert.equal(orders[0].status, 'processing');
     assert.equal(orders[0].walletBalance, '500.00');
 
-    const webhook = await fetch(`${base}/webhooks/payments`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event: 'payment.completed', data: { orderId: 'ORD-1042', paymentId: 'PAY-9001', amount: '49.99', currency: 'USD', status: 'succeeded' } }) });
+    const webhook = await fetch(`${base}/api/payment-confirmations`, { method: 'POST', headers: confirmationHeaders, body: JSON.stringify({ event: 'payment.completed', data: { orderId: 'ORD-1042', paymentId: 'PAY-9001', amount: '49.99', currency: 'USD', status: 'succeeded' } }) });
     assert.equal(webhook.status, 200);
     orders = await (await fetch(`${base}/api/orders`)).json();
     assert.equal(orders[0].status, 'paid');
@@ -76,7 +79,7 @@ test('acknowledgment and webhook are separate payment stages', async () => {
       orders = await (await fetch(`${base}/api/orders`)).json();
     }
     assert.equal(orders[0].paymentId, 'PAY-9001');
-    const discountedWebhook = await fetch(`${base}/webhooks/payments`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event: 'payment.completed', data: { orderId: 'ORD-1043', paymentId: 'PAY-9001', amount: '44.99', currency: 'USD', status: 'succeeded' } }) });
+    const discountedWebhook = await fetch(`${base}/api/payment-confirmations`, { method: 'POST', headers: confirmationHeaders, body: JSON.stringify({ event: 'payment.completed', data: { orderId: 'ORD-1043', paymentId: 'PAY-9001', amount: '44.99', currency: 'USD', status: 'succeeded' } }) });
     assert.equal(discountedWebhook.status, 200);
     orders = await (await fetch(`${base}/api/orders`)).json();
     assert.equal(orders[0].walletBalance, '455.01');
