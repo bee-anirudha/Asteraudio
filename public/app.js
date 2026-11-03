@@ -15,6 +15,11 @@ let appliedCoupon = null;
 let signedIn = sessionStorage.getItem('aster-signed-out') !== 'true';
 
 function text(id, value) { document.getElementById(id).textContent = value; }
+function deliveryLabel(order) {
+  if (!order?.estimatedDeliveryStart || !order?.estimatedDeliveryEnd) return '3–5 business days';
+  const format = (date) => new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }).format(new Date(`${date}T12:00:00Z`));
+  return `${format(order.estimatedDeliveryStart)} – ${format(order.estimatedDeliveryEnd)}`;
+}
 function setMenuOpen(open) {
   accountMenu.hidden = !open;
   accountTrigger.setAttribute('aria-expanded', String(open));
@@ -63,6 +68,8 @@ function render(order) {
   text('detail-order', order?.orderId || '—');
   text('detail-payment', order?.paymentId || '—');
   text('detail-status', order?.status === 'paid' ? 'Paid' : order?.status === 'error' ? 'Error' : 'Awaiting payment');
+  text('delivery-date', deliveryLabel(order));
+  text('status-delivery-date', deliveryLabel(order));
   text('wallet-balance', `$${order?.walletBalance || '500.00'}`);
   text('order-reference', order?.orderId || '');
   if (!order) {

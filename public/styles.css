@@ -292,3 +292,61 @@
   .account-trigger .avatar-img{width:30px;height:30px}
   .account-menu{width:min(284px,calc(100vw - 28px));right:-2px}
 }
+
+/* Delivery details and the post-order receipt. */
+.customer-section{display:block}
+.shipping-address{display:flex;justify-content:space-between;align-items:start;gap:20px}
+.delivery-promise{display:flex;align-items:center;gap:11px;margin-top:17px;padding:13px 14px;border:1px solid #ebe7ef;border-radius:9px;background:#faf9fc}
+.delivery-mark{display:grid;place-items:center;width:33px;height:33px;flex:none;border-radius:8px;background:#eee9f8;color:#55439a;font-size:18px}
+.delivery-mark svg{width:18px;height:18px}
+.delivery-promise>div{display:flex;flex-direction:column;gap:3px}
+.delivery-promise span:not(.delivery-mark){color:#78727e;font-size:11px}
+.delivery-promise strong{color:#282431;font-size:13px}
+.delivery-promise small{color:#89838e;font-size:10px}
+.status-delivery{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:13px;padding:15px 4px 0;border-top:1px solid #e7e1ee;color:#77717f;font-size:12px}
+.status-delivery strong{color:#312a43;font-size:13px}
+@media(max-width:570px){.shipping-address{display:block}.customer-info{margin-top:8px}}
+
+.main.has-order .promo-banner,.main.has-order .coupon-form,.main.has-order .pay-button{display:none}
+.main.has-order .checkout-scene,.main.has-order .journey-scene{min-height:0}
+.main.has-order .checkout-scene{padding-top:23px;padding-bottom:14px}
+.main.has-order .journey-scene{padding-top:12px;padding-bottom:30px}
+.main.has-order .checkout-card{border:0;box-shadow:none;background:transparent;border-radius:0;padding:11px 12px}
+.main.has-order .product{padding:17px 0 19px}
+.main.has-order .product-art{width:110px;height:110px}
+.main.has-order .product-copy h2{font-size:21px}
+.main.has-order .product-meta{margin-top:9px}
+.main.has-order .summary{padding:16px 0 6px}
+.main.has-order .customer-section{padding:15px 0}
+.main.has-order .payment-header{padding-top:15px}
+.main.has-order .wallet-card{margin-top:11px}
+.main.has-order .journey-scene .status-card{min-height:0;background:#f8f6fc;border-color:#eee9f5;box-shadow:none;padding:29px 34px 28px;transition:background-color .45s ease,border-color .45s ease;animation:status-enter .5s cubic-bezier(.16,1,.3,1) both}
+.main.has-order .journey-scene .status-card.paid{background:#f4faf6;border-color:#e0ede4}
+.main.has-order .status-hero,.main.has-order .status-card.processing .status-hero{margin:25px auto 31px}
+.main.has-order .status-emblem,.main.has-order .status-card.processing .status-emblem{margin-bottom:20px;transition:background-color .45s ease,transform .45s cubic-bezier(.16,1,.3,1)}
+.main.has-order .timeline-item{min-height:69px;border-bottom:1px solid #e9e5ec;animation:step-enter .36s cubic-bezier(.16,1,.3,1) both}
+.main.has-order .timeline-item:last-child{border-bottom:0}
+.main.has-order .timeline-item:not(:last-child):before{display:none}
+.main.has-order .timeline-item:nth-child(1){animation-delay:.12s}
+.main.has-order .timeline-item:nth-child(2){animation-delay:.19s}
+.main.has-order .timeline-item:nth-child(3){animation-delay:.26s}
+.main.has-order .detail-panel{margin:11px 0 0;max-width:none;background:#fff}
+.main.has-order .checkout-scene .scene-content{animation:receipt-enter .38s cubic-bezier(.16,1,.3,1) both}
+.main.has-order .status-card.paid .status-emblem{animation:success-settle .46s cubic-bezier(.34,1.3,.64,1) both}
+.main.has-order .status-card.paid .status-hero h2{animation:step-enter .35s cubic-bezier(.16,1,.3,1) both}
+@keyframes receipt-enter{from{opacity:.7;transform:translate3d(0,10px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes status-enter{from{opacity:0;transform:translate3d(18px,0,0) scale(.985)}to{opacity:1;transform:translate3d(0,0,0) scale(1)}}
+@keyframes step-enter{from{transform:translate3d(0,8px,0)}to{transform:translate3d(0,0,0)}}
+@keyframes success-settle{from{transform:scale(.84)}to{transform:scale(1)}}
+@media(min-width:800px){
+  .main.has-order{grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr)}
+  .main.has-order .checkout-scene,.main.has-order .journey-scene{padding:0}
+}
+@media(min-width:800px) and (max-width:1099px){
+  .main.has-order .product-art{width:90px;height:94px}
+  .main.has-order .journey-scene .status-card{padding:24px 22px}
+}
+@media(prefers-reduced-motion:reduce){
+  .main.has-order .checkout-scene .scene-content,.main.has-order .journey-scene .status-card,.main.has-order .timeline-item,.main.has-order .status-card.paid .status-emblem,.main.has-order .status-card.paid .status-hero h2{animation:none}
+  .main.has-order .journey-scene .status-card,.main.has-order .status-emblem{transition:none}
+}

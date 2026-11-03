@@ -14,6 +14,14 @@ const WALLET_CENTS = 50000;
 const COUPON_CODE = 'ASTER10';
 
 function money(cents) { return (cents / 100).toFixed(2); }
+function businessDayAfter(date, count) {
+  const day = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+  for (let added = 0; added < count;) {
+    day.setUTCDate(day.getUTCDate() + 1);
+    if (day.getUTCDay() !== 0 && day.getUTCDay() !== 6) added++;
+  }
+  return day.toISOString().slice(0, 10);
+}
 
 function json(res, status, body) {
   res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
@@ -40,6 +48,9 @@ function orderView(order) {
     amount: order.amount,
     couponCode: order.couponCode,
     discount: order.discount,
+    placedAt: order.placedAt,
+    estimatedDeliveryStart: order.estimatedDeliveryStart,
+    estimatedDeliveryEnd: order.estimatedDeliveryEnd,
     currency: order.currency,
     status: order.status,
     paymentId: order.paymentId,
@@ -57,7 +68,8 @@ async function checkout(req, res) {
   const discountCents = couponCode ? Math.round(PRICE_CENTS * 0.1) : 0;
   const amountCents = PRICE_CENTS - discountCents;
   const orderId = `ORD-${nextOrderNumber++}`;
-  const order = { orderId, amount: money(amountCents), couponCode: couponCode || null, discount: money(discountCents), currency: 'USD', walletBalance: money(WALLET_CENTS), status: 'processing', paymentId: null, event: null, webhookReceivedAt: null, error: null };
+  const placedAt = new Date();
+  const order = { orderId, amount: money(amountCents), couponCode: couponCode || null, discount: money(discountCents), currency: 'USD', walletBalance: money(WALLET_CENTS), placedAt: placedAt.toISOString(), estimatedDeliveryStart: businessDayAfter(placedAt, 3), estimatedDeliveryEnd: businessDayAfter(placedAt, 5), status: 'processing', paymentId: null, event: null, webhookReceivedAt: null, error: null };
   orders.set(orderId, order);
   publish(orderView(order));
   json(res, 201, { orderId, status: 'processing' });
