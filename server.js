@@ -1,4 +1,5 @@
 const http = require('node:http');
+const { randomBytes } = require('node:crypto');
 const fs = require('node:fs/promises');
 const path = require('node:path');
 
@@ -8,7 +9,6 @@ const CONFIRMATION_TOKEN = process.env.CONFIRMATION_TOKEN || '';
 const publicDir = path.join(__dirname, 'public');
 const orders = new Map();
 const clients = new Set();
-let nextOrderNumber = 1042;
 const PRICE_CENTS = 4999;
 const WALLET_CENTS = 50000;
 const COUPON_CODE = 'ASTER10';
@@ -67,7 +67,7 @@ async function checkout(req, res) {
   if (couponCode && couponCode !== COUPON_CODE) return json(res, 400, { error: 'That coupon code is not valid.' });
   const discountCents = couponCode ? Math.round(PRICE_CENTS * 0.1) : 0;
   const amountCents = PRICE_CENTS - discountCents;
-  const orderId = `ORD-${nextOrderNumber++}`;
+  const orderId = `ORD-${randomBytes(6).toString('hex').toUpperCase()}`;
   const placedAt = new Date();
   const order = { orderId, amount: money(amountCents), couponCode: couponCode || null, discount: money(discountCents), currency: 'USD', walletBalance: money(WALLET_CENTS), placedAt: placedAt.toISOString(), estimatedDeliveryStart: businessDayAfter(placedAt, 3), estimatedDeliveryEnd: businessDayAfter(placedAt, 5), status: 'processing', paymentId: null, event: null, webhookReceivedAt: null, error: null };
   orders.set(orderId, order);

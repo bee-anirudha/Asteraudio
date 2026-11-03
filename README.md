@@ -13,7 +13,7 @@ $env:CONFIRMATION_TOKEN = '<same-private-token-as-backend>'
 npm start
 ```
 
-Open <http://localhost:4173>. The server generates an order ID when **Place order** is clicked; the first order after starting the server is `ORD-1042`, followed by `ORD-1043`, and so on. The amount is `49.99 USD`. Without `BEECEPTOR_PAYMENTS_URL`, the app runs a local preview simulation. Set this variable to use the live Beeceptor endpoint.
+Open <http://localhost:4173>. The server generates a unique order ID when **Place order** is clicked, including across service restarts. The amount is `49.99 USD` without a coupon. Without `BEECEPTOR_PAYMENTS_URL`, the app runs a local preview simulation. Set this variable to use the live Beeceptor endpoint.
 
 ## Configure Beeceptor
 

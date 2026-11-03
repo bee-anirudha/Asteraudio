@@ -40,7 +40,7 @@ The backend calls `POST https://asteraudio.onrender.com/api/payment-confirmation
 
 ## App walkthrough for approval
 
-1. Leave the `ASTER10` coupon unapplied, so the total is **$49.99** and Acme Pay Wallet starts at **$500.00**.
+1. Open the backend dashboard first to wake its free Render instance, then open checkout. Leave the `ASTER10` coupon unapplied, so the total is **$49.99** and Acme Pay Wallet starts at **$500.00**.
 2. Click **Place order**. The app creates an order number immediately. The **Order update** panel appears and says **Awaiting payment**. Note the generated order number; it can differ between runs.
 3. Open the matching Beeceptor Request History entry. The app server sent `POST /payments` with `{"orderId":"<ORDER_ID>","amount":"49.99","currency":"USD"}`. Beeceptor returned HTTP `202` and `{"paymentId":"PAY-9001","status":"processing"}`.
 4. In that same history entry, show **Callout Request** to Aster Audio Backend. Its rendered body is `{"event":"payment.completed","data":{"paymentId":"PAY-9001","orderId":"<ORDER_ID>","amount":"49.99","currency":"USD","status":"succeeded"}}`. The backend returns HTTP `200` and `{"confirmed":true,"orderId":"<ORDER_ID>","paymentId":"PAY-9001"}` after Aster Audio accepts the confirmation.
