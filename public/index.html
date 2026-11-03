@@ -19,29 +19,29 @@
       <section class="checkout-scene" id="checkout" aria-label="Checkout">
         <div class="scene-content">
         <section class="checkout-card" aria-labelledby="checkout-title">
-          <div class="card-top"><span class="card-kicker">YOUR ORDER</span><span class="order-reference" id="order-reference"></span></div>
-          <div class="product"><div class="product-art"><div class="art-glow"></div><img src="/product.svg" alt="Aster One wireless headphones"></div><div class="product-copy"><span class="product-category">WIRELESS HEADPHONES</span><h2 id="checkout-title">Aster One</h2><p>Studio sound, every day.</p><div class="product-meta"><span>Sand / Graphite</span><span class="meta-dot"></span><span>Qty 1</span></div></div><span class="product-price">$49.99</span></div>
-          <div class="summary"><div><span>Subtotal</span><strong>$49.99</strong></div><div><span>Shipping</span><strong class="free">Complimentary</strong></div><div class="summary-total"><span>Total due</span><strong>$49.99 <small>USD</small></strong></div></div>
-          <div class="customer-section"><div><span class="card-kicker">DELIVERY</span><h3>Shipping details</h3></div><div class="customer-info"><strong>Alex Morgan</strong><span>1458 Elm Street, Apt 4B</span><span>San Francisco, CA 94103</span></div></div>
-          <div class="payment-header"><div><span class="card-kicker">PAYMENT</span><h3>Pay with wallet</h3></div></div>
-          <div class="wallet-card"><div class="wallet-symbol" aria-hidden="true">AP</div><div class="wallet-name"><strong>Acme Pay Wallet</strong><span>Available balance</span></div><strong class="wallet-balance" id="wallet-balance">$500.00</strong><span class="wallet-check" aria-hidden="true">✓</span></div>
-          <button class="pay-button" id="pay-button" type="button"><span>Place order</span><span class="button-right">$49.99 <span class="button-arrow">↗</span></span></button>
+          <div class="card-top"><span class="card-kicker">Order summary</span><span class="order-reference" id="order-reference"></span></div>
+          <div class="product"><div class="product-art"><img src="/product.svg" alt="Aster One wireless headphones"></div><div class="product-copy"><span class="product-category">Wireless headphones</span><h2 id="checkout-title">Aster One</h2><p>Sand / Graphite</p><div class="product-meta"><span>Quantity: 1</span></div></div><span class="product-price">$49.99</span></div>
+          <div class="summary"><div><span>Subtotal</span><strong>$49.99</strong></div><div><span>Shipping</span><strong class="free">Free</strong></div><div class="summary-total"><span>Total</span><strong>$49.99 <small>USD</small></strong></div></div>
+          <div class="customer-section"><div><span class="card-kicker">Shipping to</span><h3>Alex Morgan</h3></div><div class="customer-info"><span>1458 Elm Street, Apt 4B</span><span>San Francisco, CA 94103</span></div></div>
+          <div class="payment-header"><div><span class="card-kicker">Payment method</span><h3>Acme Pay Wallet</h3></div></div>
+          <div class="wallet-card"><div class="wallet-symbol" aria-hidden="true">AP</div><div class="wallet-name"><strong>Wallet balance</strong><span>Acme Pay</span></div><strong class="wallet-balance" id="wallet-balance">$500.00</strong><span class="wallet-check" aria-hidden="true">✓</span></div>
+          <button class="pay-button" id="pay-button" type="button"><span>Place order</span><span class="button-right">$49.99 <span class="button-arrow">→</span></span></button>
         </section>
         </div>
       </section>
       <section class="journey-scene" id="journey" aria-label="Order status" hidden>
         <div class="scene-content">
         <aside class="status-card" aria-labelledby="status-title">
-          <div class="status-top"><span class="card-kicker">ORDER STATUS</span><span class="live-tag"><span></span> LIVE UPDATES</span></div>
+          <div class="status-top"><span class="card-kicker">Order update</span><span class="live-tag"><span></span> Secure payment</span></div>
           <div class="status-hero" aria-live="polite"><div class="status-emblem" id="status-emblem"><span id="status-icon">⋯</span></div><span class="status-overline" id="status-overline">PAYMENT IN PROGRESS</span><h2 id="status-title">Awaiting payment</h2><p id="status-description">We’re confirming your wallet payment. This usually takes a few seconds.</p></div>
-          <div class="timeline" aria-label="Payment progress"><div class="timeline-item" id="step-request"><span class="timeline-dot">1</span><div><h3>Order placed</h3><p>We’ve received your order</p></div><span class="timeline-state" id="state-request">Waiting</span></div><div class="timeline-item" id="step-response"><span class="timeline-dot">2</span><div><h3>Payment processing</h3><p>Your wallet payment is being processed</p></div><span class="timeline-state" id="state-response">Waiting</span></div><div class="timeline-item" id="step-webhook"><span class="timeline-dot">3</span><div><h3>Payment confirmed</h3><p>Payment complete</p></div><span class="timeline-state" id="state-webhook">Waiting</span></div></div>
-          <div class="detail-panel" id="detail-panel"><div><span>ORDER ID</span><strong id="detail-order">—</strong></div><div><span>PAYMENT ID</span><strong id="detail-payment">—</strong></div><div><span>STATUS</span><strong id="detail-status">Awaiting payment</strong></div></div>
+          <div class="timeline" aria-label="Payment progress"><div class="timeline-item" id="step-request"><span class="timeline-dot">1</span><div><h3>Order placed</h3><p>We have your order.</p></div><span class="timeline-state" id="state-request">Waiting</span></div><div class="timeline-item" id="step-response"><span class="timeline-dot">2</span><div><h3>Wallet payment</h3><p>Checking your wallet payment.</p></div><span class="timeline-state" id="state-response">Waiting</span></div><div class="timeline-item" id="step-webhook"><span class="timeline-dot">3</span><div><h3>Confirmation</h3><p>Your receipt is ready.</p></div><span class="timeline-state" id="state-webhook">Waiting</span></div></div>
+          <div class="detail-panel" id="detail-panel"><div><span>Order number</span><strong id="detail-order">—</strong></div><div><span>Transaction ID</span><strong id="detail-payment">—</strong></div><div><span>Status</span><strong id="detail-status">Awaiting payment</strong></div></div>
         </aside>
         <div class="utility-row"><span></span><button type="button" id="reset-button">Shop again <span>↺</span></button></div>
         </div>
       </section>
     </main>
-    <footer class="site-footer"><span>© 2026 Aster Audio</span><span>Made for better listening.</span></footer>
+    <footer class="site-footer"><span>© 2026 Aster Audio</span></footer>
   </div>
 </body>
 </html>

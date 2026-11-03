@@ -131,3 +131,87 @@
 .journey-scene .detail-panel{margin-top:auto;margin-bottom:0}
 .checkout-scene{padding-top:30px;padding-bottom:36px}
 @media(max-width:570px){.checkout-scene{padding-top:20px}.journey-scene .status-card{padding-bottom:22px}}
+
+/* Storefront finish */
+:root{color:#24232a;background:#fff}
+.shell,.checkout-scene,.journey-scene,.site-footer{background:#fff}
+.topbar{max-width:none;border-bottom:1px solid #eae8e5;padding:0 max(24px,calc((100vw - 760px)/2));height:68px}
+.brand{font-size:20px;letter-spacing:-1px;color:#25232e}
+.brand-mark{width:31px;height:31px;border-radius:7px;background:#4c3a94;font-size:20px}
+.brand-mark span{color:#f4ba9f}
+.topbar-right{font-size:12px;color:#77747f}
+.scene-content{width:min(100%,700px)}
+.checkout-scene{padding:28px 20px 42px;min-height:calc(100svh - 68px)}
+.checkout-card{border:1px solid #e9e6e8;border-radius:16px;box-shadow:0 14px 40px #2017350b;padding:27px 34px 30px}
+.card-kicker,.product-category,.status-card .card-kicker{color:#66616f;font-size:12px;font-weight:700;letter-spacing:0;text-transform:none}
+.order-reference{color:#625b75;font-size:12px;letter-spacing:0}
+.product{gap:24px;padding:22px 0 24px;border-color:#eae8e8}
+.product-art{width:145px;height:145px;border-radius:11px;background:#f2f0f8}
+.product-art img{width:92%;height:92%;transform:none;filter:none}
+.product-copy h2{font:700 25px Manrope,sans-serif;letter-spacing:-.9px;margin:6px 0 5px;color:#24232a}
+.product-copy p,.product-meta{font-size:12px;color:#77737e}
+.product-meta{margin-top:16px}
+.product-price{font:700 17px Manrope,sans-serif;color:#24232a;margin-bottom:9px}
+.summary{padding:19px 0 8px}
+.summary>div{color:#696671;font-size:13px;margin-bottom:12px}
+.summary strong,.summary .summary-total,.summary-total strong{color:#24232a}
+.summary .summary-total{border-color:#eae8e8;margin-top:17px;padding-top:18px}
+.summary-total strong{font-size:23px}
+.summary-total small{color:#88838d}
+.customer-section{border-color:#eae8e8;align-items:center;padding:19px 0}
+.customer-section h3,.payment-header h3{font:700 15px Manrope,sans-serif;letter-spacing:-.2px;color:#24232a;margin:6px 0 0}
+.customer-info{font-size:12px;color:#716d78;line-height:1.5}
+.payment-header{border-color:#eae8e8;padding-top:18px}
+.wallet-card{background:#faf9fd;border:1px solid #ddd8e9;border-radius:9px;margin-top:15px;padding:12px 15px}
+.wallet-symbol{background:#e4dff3;color:#4c3a94;border-radius:7px;width:38px;height:38px;font-size:13px}
+.wallet-name strong{color:#24232a;font-size:12px}
+.wallet-name span{color:#85808d;font-size:11px}
+.wallet-balance{color:#24232a;font-size:17px}
+.wallet-check{background:#5e936b}
+.pay-button{height:53px;border-radius:9px;background:#4c3a94;box-shadow:none;margin-top:18px;font-size:14px}
+.pay-button:hover:not(:disabled){background:#3e2e7d;transform:none}
+.pay-button:focus-visible,.utility-row button:focus-visible{outline:3px solid #a99be5;outline-offset:3px}
+.button-arrow{margin-left:11px}
+.journey-scene{padding:45px 20px 54px}
+.journey-scene .status-card{min-height:590px;background:#fff;color:#24232a;border:1px solid #e9e6e8;border-radius:16px;box-shadow:0 14px 40px #2017350b;padding:28px 34px 30px}
+.status-card:before{display:none}
+.live-tag{color:#77717f;font-size:11px;letter-spacing:0;font-weight:600}
+.live-tag span{background:#5e936b;box-shadow:none}
+.status-hero,.status-card.processing .status-hero{margin:40px auto 38px;max-width:500px}
+.status-emblem,.status-card.processing .status-emblem{width:64px;height:64px;background:#f0edf8;border:0;box-shadow:none;margin-bottom:24px}
+.status-emblem span{color:#4c3a94}
+.status-card.processing .status-emblem::after{inset:-7px;border-color:#a99be5;border-top-color:transparent;border-right-color:transparent}
+.status-overline{color:#746a8c;font-size:11px;letter-spacing:1px}
+.status-hero h2,.journey-scene .status-hero h2,.status-card.processing .status-hero h2{color:#24232a;font:700 clamp(29px,4vw,39px)/1.2 Manrope,sans-serif;letter-spacing:-1.4px;margin:10px 0 11px}
+.status-hero p{color:#77727d;font-size:13px;line-height:1.55}
+.timeline{max-width:510px}
+.timeline-item{min-height:71px;opacity:.4}
+.timeline-item.active,.timeline-item.complete{opacity:1}
+.timeline-item:not(:last-child):before{border-color:#ddd8e4}
+.timeline-dot{background:#fff;border:1px solid #c7c0d1;color:#776e84}
+.timeline-item.complete .timeline-dot{background:#e9f3eb;color:#35734b}
+.timeline-item h3{font-size:13px;font-weight:700;color:#292630}
+.timeline-item p{font-size:11px;color:#817b88}
+.timeline-state{color:#77717f;font-size:11px}
+.timeline-item.active .timeline-state{color:#4c3a94}
+.detail-panel{max-width:550px;background:#faf9fb;border:1px solid #eae7ec;border-radius:9px;padding:16px;margin-top:16px}
+.detail-panel>div{border-color:#e7e3e9}
+.detail-panel span{color:#79737e;font-size:10px;letter-spacing:0;text-transform:none}
+.detail-panel strong{color:#24232a;font-size:12px}
+.status-card.paid .status-emblem{background:#e9f3eb;box-shadow:none}
+.status-card.paid .status-emblem span{color:#35734b}
+.status-card.error .status-emblem{background:#faece9}
+.status-card.error .status-emblem span{color:#b85646}
+.utility-row{margin:18px 3px;font-size:12px}
+.utility-row button{color:#4c3a94;font-size:12px}
+.site-footer{padding:24px max(24px,calc((100vw - 700px)/2));color:#89838d;font-size:11px}
+@media(max-width:570px){
+  .topbar{padding:0 18px}.topbar-right{font-size:0}
+  .checkout-scene,.journey-scene{padding-left:14px;padding-right:14px}
+  .checkout-card,.journey-scene .status-card{padding:22px 20px 25px}
+  .product{gap:13px}.product-art{width:112px;height:120px}.product-copy h2{font-size:20px}.product-price{font-size:14px}
+  .customer-section{align-items:flex-start}.customer-info{align-items:flex-start}
+  .journey-scene .status-card{min-height:560px}.status-hero,.status-card.processing .status-hero{margin:31px auto 32px}
+  .detail-panel{gap:0;padding:12px 8px}.detail-panel>div{padding:0 6px}.detail-panel span{font-size:9px}.detail-panel strong{font-size:10px}
+  .site-footer{padding:20px 18px}
+}

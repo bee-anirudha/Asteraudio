@@ -25,7 +25,7 @@ function render(order) {
   if (!order) {
     text('status-overline', 'PAYMENT IN PROGRESS');
     text('status-title', 'Awaiting payment');
-    text('status-description', 'We’re confirming your wallet payment. This usually takes a few seconds.');
+    text('status-description', 'Your wallet payment is being confirmed. You can leave this page open.');
     text('status-icon', '⋯');
     step('request', ''); step('response', ''); step('webhook', '');
     payButton.disabled = false;
@@ -48,16 +48,16 @@ function render(order) {
     statusCard.classList.add('paid');
     text('status-overline', 'ORDER CONFIRMED');
     text('status-title', 'Payment successful');
-    text('status-description', `Your wallet payment is complete. Order ${order.orderId} is confirmed.`);
+    text('status-description', `Thanks, Alex. Order ${order.orderId} is confirmed.`);
     text('status-icon', '✓');
     step('webhook', 'complete');
     payButton.disabled = true;
   } else {
     statusCard.classList.add('processing');
-    text('status-overline', order.paymentId ? 'PAYMENT IN PROGRESS' : 'PLACING YOUR ORDER');
-    text('status-title', order.paymentId ? 'Awaiting payment' : 'Placing your order…');
-    text('status-description', order.paymentId ? 'We’re confirming your wallet payment. This usually takes a few seconds.' : 'We’re setting up your order.');
-    text('status-icon', order.paymentId ? '⋯' : '↗');
+    text('status-overline', order.orderId ? 'PAYMENT IN PROGRESS' : 'PLACING YOUR ORDER');
+    text('status-title', order.orderId ? 'Awaiting payment' : 'Placing your order…');
+    text('status-description', order.orderId ? 'Your wallet payment is being confirmed. You can leave this page open.' : 'We’re receiving your order.');
+    text('status-icon', order.orderId ? '⋯' : '↗');
     step('webhook', order.paymentId ? 'active' : '');
     payButton.disabled = true;
   }
