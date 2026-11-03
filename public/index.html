@@ -18,14 +18,16 @@
     <main class="main">
       <section class="checkout-scene" id="checkout" aria-label="Checkout">
         <div class="scene-content">
+        <div class="promo-banner"><div><strong>10% off every order</strong><span>Use <b>ASTER10</b> at checkout.</span></div><span class="promo-icon" aria-hidden="true">✳</span></div>
         <section class="checkout-card" aria-labelledby="checkout-title">
           <div class="card-top"><span class="card-kicker">Order summary</span><span class="order-reference" id="order-reference"></span></div>
           <div class="product"><div class="product-art"><img src="/product.svg" alt="Aster One wireless headphones"></div><div class="product-copy"><span class="product-category">Wireless headphones</span><h2 id="checkout-title">Aster One</h2><p>Sand / Graphite</p><div class="product-meta"><span>Quantity: 1</span></div></div><span class="product-price">$49.99</span></div>
-          <div class="summary"><div><span>Subtotal</span><strong>$49.99</strong></div><div><span>Shipping</span><strong class="free">Free</strong></div><div class="summary-total"><span>Total</span><strong>$49.99 <small>USD</small></strong></div></div>
+          <div class="summary"><div><span>Subtotal</span><strong>$49.99</strong></div><div><span>Shipping</span><strong class="free">Free</strong></div><div class="discount-row" id="discount-row" hidden><span>Coupon (ASTER10)</span><strong>−$5.00</strong></div><div class="summary-total"><span>Total</span><strong><span id="order-total">$49.99</span> <small>USD</small></strong></div></div>
+          <form class="coupon-form" id="coupon-form"><label for="coupon-code">Coupon code</label><div class="coupon-controls"><input id="coupon-code" name="couponCode" type="text" placeholder="Enter a code" autocomplete="off" spellcheck="false" maxlength="24"><button id="coupon-button" type="submit">Apply</button></div><p class="coupon-feedback" id="coupon-feedback" role="status" aria-live="polite"></p></form>
           <div class="customer-section"><div><span class="card-kicker">Shipping to</span><h3>Alex Morgan</h3></div><div class="customer-info"><span>1458 Elm Street, Apt 4B</span><span>San Francisco, CA 94103</span></div></div>
           <div class="payment-header"><div><span class="card-kicker">Payment method</span><h3>Acme Pay Wallet</h3></div></div>
           <div class="wallet-card"><div class="wallet-symbol" aria-hidden="true">AP</div><div class="wallet-name"><strong>Wallet balance</strong><span>Acme Pay</span></div><strong class="wallet-balance" id="wallet-balance">$500.00</strong><span class="wallet-check" aria-hidden="true">✓</span></div>
-          <button class="pay-button" id="pay-button" type="button"><span>Place order</span><span class="button-right">$49.99 <span class="button-arrow">→</span></span></button>
+          <button class="pay-button" id="pay-button" type="button"><span>Place order</span><span class="button-right"><span id="button-total">$49.99</span> <span class="button-arrow">→</span></span></button>
         </section>
         </div>
       </section>

@@ -215,3 +215,27 @@
   .detail-panel{gap:0;padding:12px 8px}.detail-panel>div{padding:0 6px}.detail-panel span{font-size:9px}.detail-panel strong{font-size:10px}
   .site-footer{padding:20px 18px}
 }
+
+.promo-banner{display:flex;align-items:center;justify-content:space-between;gap:20px;margin:0 0 14px;padding:15px 20px;border-radius:11px;background:#f4f0fd;border:1px solid #e6ddfa;color:#2e2550}
+.promo-banner>div{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 12px}
+.promo-banner strong{font:700 14px Manrope,sans-serif}
+.promo-banner span{font-size:12px}
+.promo-banner b{color:#4c3a94;letter-spacing:.3px}
+.promo-icon{color:#6f58bc;font-size:23px!important;line-height:1}
+.summary .discount-row{color:#4d7c5a}
+.summary .discount-row strong{color:#397447}
+.summary .discount-row[hidden]{display:none}
+.coupon-form{padding:2px 0 20px;border-bottom:1px solid #eae8e8}
+.coupon-form label{display:block;color:#66616f;font-size:12px;font-weight:700;margin-bottom:9px}
+.coupon-controls{display:flex;gap:9px}
+.coupon-controls input{flex:1;min-width:0;height:42px;border:1px solid #dcd8e2;border-radius:8px;padding:0 13px;color:#24232a;background:#fff;font-size:13px;outline:none}
+.coupon-controls input:focus{border-color:#7360b6;box-shadow:0 0 0 3px #7360b620}
+.coupon-controls input:disabled{background:#f8f7fa;color:#514a62}
+.coupon-controls button{min-width:80px;border:1px solid #cfc7e4;border-radius:8px;background:#fff;color:#4c3a94;font-size:12px;font-weight:700}
+.coupon-controls button:hover{background:#f7f4fd}
+.coupon-controls button:focus-visible{outline:3px solid #a99be5;outline-offset:2px}
+.coupon-feedback{min-height:0;margin:0;color:#397447;font-size:11px}
+.coupon-feedback:not(:empty){margin-top:7px}
+.coupon-feedback.error{color:#b44242}
+.coupon-form+.customer-section{border-top:0}
+@media(max-width:570px){.promo-banner{padding:13px 15px}.promo-banner>div{display:block}.promo-banner span{display:block;margin-top:3px}}

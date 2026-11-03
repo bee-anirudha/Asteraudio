@@ -9,6 +9,11 @@ const publicDir = path.join(__dirname, 'public');
 const orders = new Map();
 const clients = new Set();
 let nextOrderNumber = 1042;
+const PRICE_CENTS = 4999;
+const WALLET_CENTS = 50000;
+const COUPON_CODE = 'ASTER10';
+
+function money(cents) { return (cents / 100).toFixed(2); }
 
 function json(res, status, body) {
   res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
@@ -33,6 +38,8 @@ function orderView(order) {
   return {
     orderId: order.orderId,
     amount: order.amount,
+    couponCode: order.couponCode,
+    discount: order.discount,
     currency: order.currency,
     status: order.status,
     paymentId: order.paymentId,
@@ -44,9 +51,13 @@ function orderView(order) {
 }
 
 async function checkout(req, res) {
-  await readJson(req);
+  const body = await readJson(req);
+  const couponCode = String(body?.couponCode || '').trim().toUpperCase();
+  if (couponCode && couponCode !== COUPON_CODE) return json(res, 400, { error: 'That coupon code is not valid.' });
+  const discountCents = couponCode ? Math.round(PRICE_CENTS * 0.1) : 0;
+  const amountCents = PRICE_CENTS - discountCents;
   const orderId = `ORD-${nextOrderNumber++}`;
-  const order = { orderId, amount: '49.99', currency: 'USD', walletBalance: '500.00', status: 'processing', paymentId: null, event: null, webhookReceivedAt: null, error: null };
+  const order = { orderId, amount: money(amountCents), couponCode: couponCode || null, discount: money(discountCents), currency: 'USD', walletBalance: money(WALLET_CENTS), status: 'processing', paymentId: null, event: null, webhookReceivedAt: null, error: null };
   orders.set(orderId, order);
   publish(orderView(order));
   json(res, 201, { orderId, status: 'processing' });
@@ -63,7 +74,7 @@ async function processPayment(order) {
     setTimeout(() => {
       if (orders.get(orderId) !== order || order.status !== 'processing') return;
       order.status = 'paid';
-      order.walletBalance = '450.01';
+      order.walletBalance = money(WALLET_CENTS - Math.round(Number(order.amount) * 100));
       order.event = 'payment.completed';
       order.webhookReceivedAt = new Date().toISOString();
       publish(orderView(order));
@@ -75,7 +86,7 @@ async function processPayment(order) {
     const response = await fetch(BEECEPTOR_PAYMENTS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ orderId, amount: order.amount, currency: order.currency }),
+      body: JSON.stringify({ orderId, amount: order.amount, currency: order.currency, ...(order.couponCode ? { couponCode: order.couponCode, discount: order.discount } : {}) }),
       signal: AbortSignal.timeout(15_000),
     });
     const raw = await response.text();
@@ -111,7 +122,7 @@ async function webhook(req, res) {
   if (String(payload.data.amount) !== order.amount || payload.data.currency !== order.currency) return json(res, 409, { error: 'Order amount or currency does not match.' });
   order.paymentId = payload.data.paymentId;
   order.status = 'paid';
-  order.walletBalance = '450.01';
+  order.walletBalance = money(WALLET_CENTS - Math.round(Number(order.amount) * 100));
   order.event = payload.event;
   order.webhookReceivedAt = new Date().toISOString();
   publish(orderView(order));

@@ -2,10 +2,25 @@ const payButton = document.getElementById('pay-button');
 const resetButton = document.getElementById('reset-button');
 const statusCard = document.querySelector('.status-card');
 const journeyScene = document.getElementById('journey');
+const couponForm = document.getElementById('coupon-form');
+const couponInput = document.getElementById('coupon-code');
+const couponFeedback = document.getElementById('coupon-feedback');
 let activeOrderId = null;
 let currentOrder = null;
+let appliedCoupon = null;
 
 function text(id, value) { document.getElementById(id).textContent = value; }
+function updatePricing() {
+  const discounted = appliedCoupon === 'ASTER10';
+  document.getElementById('discount-row').hidden = !discounted;
+  text('order-total', discounted ? '$44.99' : '$49.99');
+  text('button-total', discounted ? '$44.99' : '$49.99');
+  couponInput.disabled = discounted || Boolean(currentOrder?.orderId);
+  document.getElementById('coupon-button').textContent = discounted ? 'Remove' : 'Apply';
+  document.getElementById('coupon-button').disabled = Boolean(currentOrder?.orderId);
+  couponFeedback.classList.remove('error');
+  couponFeedback.textContent = discounted ? '10% discount applied.' : '';
+}
 function step(name, state) {
   const element = document.getElementById(`step-${name}`);
   element.className = `timeline-item ${state}`;
@@ -15,6 +30,11 @@ function step(name, state) {
 
 function render(order) {
   currentOrder = order;
+  if (order?.orderId) {
+    appliedCoupon = order.couponCode || null;
+    couponInput.value = appliedCoupon || '';
+  }
+  updatePricing();
   journeyScene.hidden = !order;
   statusCard.classList.remove('paid', 'error', 'processing');
   text('detail-order', order?.orderId || '—');
@@ -63,12 +83,31 @@ function render(order) {
   }
 }
 
+couponForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  if (appliedCoupon) {
+    appliedCoupon = null;
+    couponInput.value = '';
+    updatePricing();
+    couponInput.focus();
+    return;
+  }
+  if (couponInput.value.trim().toUpperCase() !== 'ASTER10') {
+    couponFeedback.textContent = 'That code isn’t valid. Try ASTER10.';
+    couponFeedback.classList.add('error');
+    return;
+  }
+  appliedCoupon = 'ASTER10';
+  couponInput.value = appliedCoupon;
+  updatePricing();
+});
+
 payButton.addEventListener('click', async () => {
   activeOrderId = null;
-  render({ status: 'processing' });
+  render({ status: 'processing', couponCode: appliedCoupon });
   journeyScene.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
   try {
-    const response = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+    const response = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ couponCode: appliedCoupon }) });
     const body = await response.json();
     if (!response.ok) throw Object.assign(new Error(body.error || `Checkout failed (${response.status}).`), { orderId: body.orderId });
     activeOrderId = body.orderId;
@@ -86,6 +125,8 @@ payButton.addEventListener('click', async () => {
 resetButton.addEventListener('click', async () => {
   await fetch('/api/reset', { method: 'POST' });
   activeOrderId = null;
+  appliedCoupon = null;
+  couponInput.value = '';
   render(null);
   window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 });
