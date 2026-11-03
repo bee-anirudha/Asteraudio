@@ -350,3 +350,25 @@
   .main.has-order .checkout-scene .scene-content,.main.has-order .journey-scene .status-card,.main.has-order .timeline-item,.main.has-order .status-card.paid .status-emblem,.main.has-order .status-card.paid .status-hero h2{animation:none}
   .main.has-order .journey-scene .status-card,.main.has-order .status-emblem{transition:none}
 }
+
+/* Use the available width to keep the checkout action above the fold. */
+@media(min-width:800px){
+  .checkout-scene .scene-content{width:min(100%,1120px)}
+  .checkout-scene .checkout-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:34px;align-items:start}
+  .checkout-secondary{border-left:1px solid #eae6ee;padding-left:34px}
+  .checkout-secondary .customer-section{border-top:0;padding-top:0}
+  .checkout-secondary .payment-header{margin-top:0}
+  .main.has-order .checkout-card{display:block}
+  .main.has-order .checkout-secondary{border-left:0;padding-left:0}
+  .main.has-order .customer-section{border-top:1px solid #eae8e8}
+}
+@media(min-width:800px) and (max-width:1099px){
+  .checkout-scene{padding-left:15px;padding-right:15px}
+  .checkout-scene .checkout-card{gap:18px;padding:22px 24px}
+  .checkout-secondary{padding-left:18px}
+  .checkout-primary .product{gap:11px}
+  .checkout-primary .product-art{width:105px;height:112px}
+  .checkout-primary .product-copy h2{font-size:21px}
+  .checkout-primary .product-price{font-size:14px}
+  .checkout-primary .product-meta{margin-top:11px}
+}
