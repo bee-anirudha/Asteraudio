@@ -81,7 +81,7 @@ async function processPayment(order) {
   if (!BEECEPTOR_PAYMENTS_URL) {
     await new Promise(resolve => setTimeout(resolve, 550));
     if (orders.get(orderId) !== order) return;
-    order.paymentId = 'PAY-9001';
+    order.paymentId = `PAY-${orderId}`;
     publish(orderView(order));
     setTimeout(() => {
       if (orders.get(orderId) !== order || order.status !== 'processing') return;

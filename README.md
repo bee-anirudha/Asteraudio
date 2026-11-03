@@ -17,23 +17,23 @@ Open <http://localhost:4173>. The server generates a unique order ID when **Plac
 
 ## Configure Beeceptor
 
-Create an HTTP Callout rule matching `POST /payments` and set its instant mock response to **202** with JSON:
+Create an HTTP Callout rule matching `POST /payments` and set its instant mock response to **202** with templating enabled:
 
 ```json
-{"paymentId":"PAY-9001","status":"processing"}
+{"paymentId":"PAY-{{body 'orderId'}}","status":"processing"}
 ```
 
 Set the callout method to `POST` and its destination to the separate backend service URL plus `/webhooks/payments`. A local server cannot receive Beeceptor's remote callout without a public tunnel. Set minimum trigger delay to 2 seconds and maximum trigger delay to 5 seconds.
 
 The app has no customer login or real wallet account. Set the same private `CONFIRMATION_TOKEN` on the checkout and backend services. The backend uses it when calling this app's `POST /api/payment-confirmations` route, which rejects requests without the matching token. Beeceptor never calls this checkout service directly.
 
-Enable templating for the callout body. The current rule uses fixed `PAY-9001` in both the immediate response and the later webhook.
+Enable templating for the callout body. The payment ID is derived from the incoming order ID in both the response and callout, so they match for each purchase. The order ID, amount, and currency are copied from the incoming request.
 
 ```json
 {
   "event": "payment.completed",
   "data": {
-    "paymentId": "PAY-9001",
+    "paymentId": "PAY-{{oReqBody 'orderId'}}",
     "orderId": "{{oReqBody 'orderId'}}",
     "amount": "{{oReqBody 'amount'}}",
     "currency": "{{oReqBody 'currency'}}",
