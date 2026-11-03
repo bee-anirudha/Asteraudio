@@ -48,6 +48,8 @@ test('acknowledgment and webhook are separate payment stages', async () => {
     }
     assert.equal(orders[0].paymentId, 'PAY-9001');
 
+    const directWebhook = await fetch(`${base}/webhooks/payments`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+    assert.equal(directWebhook.status, 404, 'Beeceptor must send its callout to the separate backend');
     const unauthorized = await fetch(`${base}/api/payment-confirmations`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event: 'payment.completed', data: { orderId: 'ORD-1042', paymentId: 'PAY-9001', amount: '49.99', currency: 'USD', status: 'succeeded' } }) });
     assert.equal(unauthorized.status, 401);
     const confirmationHeaders = { 'Content-Type': 'application/json', 'X-Confirmation-Token': 'local-test-token' };

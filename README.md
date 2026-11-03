@@ -25,7 +25,7 @@ Create an HTTP Callout rule matching `POST /payments` and set its instant mock r
 
 Set the callout method to `POST` and its destination to the separate backend service URL plus `/webhooks/payments`. A local server cannot receive Beeceptor's remote callout without a public tunnel. Set minimum trigger delay to 2 seconds and maximum trigger delay to 5 seconds.
 
-The app has no customer login or real wallet account. Set the same private `CONFIRMATION_TOKEN` on the checkout and backend services. The backend uses it when calling this app's `POST /api/payment-confirmations` route, which rejects requests without the matching token. The old `POST /webhooks/payments` route is temporarily retained during migration and will be removed after the backend is live.
+The app has no customer login or real wallet account. Set the same private `CONFIRMATION_TOKEN` on the checkout and backend services. The backend uses it when calling this app's `POST /api/payment-confirmations` route, which rejects requests without the matching token. Beeceptor never calls this checkout service directly.
 
 Enable templating for the callout body. The current rule uses fixed `PAY-9001` in both the immediate response and the later webhook.
 
