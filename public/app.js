@@ -2,6 +2,7 @@ const payButton = document.getElementById('pay-button');
 const resetButton = document.getElementById('reset-button');
 const statusCard = document.querySelector('.status-card');
 const journeyScene = document.getElementById('journey');
+const main = document.querySelector('.main');
 const couponForm = document.getElementById('coupon-form');
 const couponInput = document.getElementById('coupon-code');
 const couponFeedback = document.getElementById('coupon-feedback');
@@ -36,6 +37,7 @@ function render(order) {
   }
   updatePricing();
   journeyScene.hidden = !order;
+  main.classList.toggle('has-order', Boolean(order));
   statusCard.classList.remove('paid', 'error', 'processing');
   text('detail-order', order?.orderId || '—');
   text('detail-payment', order?.paymentId || '—');
@@ -105,7 +107,9 @@ couponForm.addEventListener('submit', (event) => {
 payButton.addEventListener('click', async () => {
   activeOrderId = null;
   render({ status: 'processing', couponCode: appliedCoupon });
-  journeyScene.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+  const scrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+  if (window.matchMedia('(min-width: 800px)').matches) window.scrollTo({ top: 0, behavior: scrollBehavior });
+  else journeyScene.scrollIntoView({ behavior: scrollBehavior, block: 'start' });
   try {
     const response = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ couponCode: appliedCoupon }) });
     const body = await response.json();

@@ -239,3 +239,26 @@
 .coupon-feedback.error{color:#b44242}
 .coupon-form+.customer-section{border-top:0}
 @media(max-width:570px){.promo-banner{padding:13px 15px}.promo-banner>div{display:block}.promo-banner span{display:block;margin-top:3px}}
+
+/* Reveal the order update beside checkout after an order is placed. */
+@media(min-width:800px){
+  .main.has-order{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start;gap:22px;max-width:1400px;margin:0 auto;padding:28px 24px 46px}
+  .main.has-order .checkout-scene,.main.has-order .journey-scene{min-height:0;padding:0;display:block}
+  .main.has-order .checkout-scene .scene-content,.main.has-order .journey-scene .scene-content{width:100%}
+  .main.has-order .journey-scene{position:sticky;top:20px}
+  .main.has-order .journey-scene .status-card{min-height:640px}
+}
+@media(min-width:800px) and (max-width:1099px){
+  .main.has-order{gap:14px;padding:18px 15px 36px}
+  .main.has-order .checkout-card,.main.has-order .status-card{padding-left:20px;padding-right:20px}
+  .main.has-order .product{gap:10px}
+  .main.has-order .product-art{width:100px;height:110px}
+  .main.has-order .product-copy h2{font-size:20px}
+  .main.has-order .product-price{font-size:14px}
+  .main.has-order .promo-banner{padding:12px 14px}
+  .main.has-order .promo-banner>div{display:block}
+  .main.has-order .promo-banner span{display:block;margin-top:3px}
+  .main.has-order .detail-panel{padding:12px 8px;gap:0}
+  .main.has-order .detail-panel>div{padding:0 5px}
+  .main.has-order .detail-panel strong{font-size:10px}
+}
