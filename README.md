@@ -47,7 +47,7 @@ The app verifies the event, order ID, payment ID, amount, and currency before ma
 
 1. Open the checkout page and frame the product card.
 2. Press **Place order**. The order ID appears immediately and the page moves to **Awaiting payment**.
-3. Show the `202 Accepted` response in Beeceptor Request History, while the customer-facing site says **Payment processing**.
+3. Show the `202 Accepted` response in Beeceptor Request History, while the customer-facing **Order update** panel says **Awaiting payment**.
 4. Show the callout and the site changing to **Payment successful** when it arrives.
 5. Press **Shop again** before another take.
 
