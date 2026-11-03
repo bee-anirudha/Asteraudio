@@ -1,0 +1,13 @@
+{
+  "name": "beeceptor-checkout-demo",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server.js",
+    "relay": "node webhook-relay.js",
+    "test": "node --test test/flow.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

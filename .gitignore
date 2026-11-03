@@ -1,0 +1,6 @@
+node_modules/
+.env
+.env.*
+checkout-*.png
+LIVE_RECORDING.md
+*.log
