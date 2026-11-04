@@ -372,3 +372,53 @@
   .checkout-primary .product-price{font-size:14px}
   .checkout-primary .product-meta{margin-top:11px}
 }
+
+/* Aster Audio palette and a checkout that begins near the navigation. */
+:root{
+  --coral:#ff595e;
+  --gold:#ffca3a;
+  --lime:#8ac926;
+  --blue:#1982c4;
+  --grape:#6a4c93;
+  --ink:#24223f;
+  color:var(--ink);
+  background:#fff;
+}
+.checkout-scene{align-items:flex-start;padding-top:24px}
+.brand-mark{background:var(--grape)}
+.brand-mark span{color:var(--coral)}
+.topbar{border-bottom-color:#e9e3ee}
+.checkout-card{border-color:#e8e2ed;box-shadow:0 16px 44px #6a4c9310}
+.card-kicker,.product-category{color:var(--grape)}
+.product-art{background:linear-gradient(135deg,#faf4ff,#f1e9fb 66%,#fff3d1)}
+.promo-banner{background:#fff7df;border-color:#f5df9b;color:var(--ink)}
+.promo-banner b{color:var(--grape)}
+.promo-icon{color:var(--coral)}
+.summary .free,.summary .discount-row,.summary .discount-row strong{color:#4d7614}
+.shipping-address{display:block}
+.shipping-address h3{margin-top:7px}
+.customer-info{align-items:flex-start;margin-top:7px}
+.delivery-promise{background:#f2f8fc;border-color:#cfe7f5}
+.delivery-mark{background:#dbeefa;color:var(--blue)}
+.payment-header{padding-top:18px}
+.wallet-card{background:#f8f5fc;border-color:#d8cce8}
+.wallet-symbol{background:var(--grape);color:#fff}
+.wallet-balance{color:var(--ink)}
+.wallet-check{background:var(--lime);color:var(--ink)}
+.pay-button{background:var(--coral);color:var(--ink);box-shadow:0 10px 23px #ff595e32}
+.pay-button:hover:not(:disabled){background:#f34e54;box-shadow:0 12px 25px #ff595e40}
+.pay-button:focus-visible,.coupon-controls button:focus-visible,.account-trigger:focus-visible,.account-action:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.coupon-controls input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #1982c422}
+.coupon-controls button{border-color:#a9d3ec;color:var(--blue)}
+.coupon-controls button:hover{background:#f2f8fc}
+.account-action:hover:not(:disabled){background:#f4f0fa}
+.main.has-order .journey-scene .status-card{background:#f2f8fc;border-color:#d4eaf7}
+.main.has-order .journey-scene .status-card.paid{background:#f6fbea;border-color:#dcefbf}
+.status-emblem,.status-card.processing .status-emblem{background:#dbeefa}
+.status-emblem span,.timeline-item.active .timeline-state,.utility-row button{color:var(--blue)}
+.status-card.processing .status-emblem::after{border-color:var(--blue);border-top-color:transparent;border-right-color:transparent}
+.status-overline{color:var(--grape)}
+.timeline-item.complete .timeline-dot,.status-card.paid .status-emblem{background:#e3f4c9}
+.timeline-item.complete .timeline-dot,.status-card.paid .status-emblem span{color:#416b0d}
+.live-tag span{background:var(--lime)}
+@media(max-width:570px){.checkout-scene{padding-top:18px}}

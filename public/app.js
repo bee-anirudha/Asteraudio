@@ -32,7 +32,6 @@ function updateAccountUi() {
   document.getElementById('account-signed-out').hidden = signedIn;
   document.getElementById('account-order').disabled = !currentOrder?.orderId;
   text('shipping-name', signedIn ? 'Alex Morgan' : 'Sign in to view');
-  text('payment-method-name', signedIn ? 'Acme Pay Wallet' : 'Sign in to use your wallet');
   text('pay-label', signedIn ? 'Place order' : 'Sign in to place order');
   document.querySelector('.button-right').hidden = !signedIn;
 }
