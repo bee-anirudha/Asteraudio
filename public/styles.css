@@ -405,8 +405,9 @@
 .wallet-symbol{background:var(--grape);color:#fff}
 .wallet-balance{color:var(--ink)}
 .wallet-check{background:var(--lime);color:var(--ink)}
-.pay-button{background:var(--coral);color:var(--ink);box-shadow:0 10px 23px #ff595e32}
-.pay-button:hover:not(:disabled){background:#f34e54;box-shadow:0 12px 25px #ff595e40}
+.pay-button{background:#1678b6;color:#fff;box-shadow:0 10px 23px #1982c432}
+.pay-button:hover:not(:disabled){background:#126fa8;box-shadow:0 12px 25px #1982c440}
+.pay-button .button-arrow{color:var(--gold)}
 .pay-button:focus-visible,.coupon-controls button:focus-visible,.account-trigger:focus-visible,.account-action:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
 .coupon-controls input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #1982c422}
 .coupon-controls button{border-color:#a9d3ec;color:var(--blue)}
