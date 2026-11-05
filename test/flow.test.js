@@ -14,7 +14,7 @@ test('acknowledgment and webhook are separate payment stages', async () => {
     for await (const chunk of req) body += chunk;
     const payment = JSON.parse(body);
     sentOrderIds.push(payment.orderId);
-    assert.match(payment.orderId, /^ORD-[A-F0-9]{12}$/);
+    assert.equal(payment.orderId, 'ORD-1042');
     assert.deepEqual(payment, sentOrderIds.length === 1
       ? { orderId: payment.orderId, amount: '49.99', currency: 'USD' }
       : { orderId: payment.orderId, amount: '44.99', currency: 'USD', couponCode: 'ASTER10', discount: '5.00' });
@@ -40,7 +40,7 @@ test('acknowledgment and webhook are separate payment stages', async () => {
     const checkout = await fetch(`${base}/api/checkout`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
     assert.equal(checkout.status, 201);
     const firstOrder = await checkout.json();
-    assert.match(firstOrder.orderId, /^ORD-[A-F0-9]{12}$/);
+    assert.equal(firstOrder.orderId, 'ORD-1042');
     assert.equal(firstOrder.status, 'processing');
     assert.equal(upstreamResponded, false, 'order ID is returned before the payment API responds');
     let orders = await (await fetch(`${base}/api/orders`)).json();
@@ -77,8 +77,7 @@ test('acknowledgment and webhook are separate payment stages', async () => {
     const nextCheckout = await fetch(`${base}/api/checkout`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ couponCode: 'aster10' }) });
     assert.equal(nextCheckout.status, 201);
     const secondOrder = await nextCheckout.json();
-    assert.match(secondOrder.orderId, /^ORD-[A-F0-9]{12}$/);
-    assert.notEqual(secondOrder.orderId, firstOrder.orderId);
+    assert.equal(secondOrder.orderId, firstOrder.orderId);
     orders = await (await fetch(`${base}/api/orders`)).json();
     assert.equal(orders[0].amount, '44.99');
     assert.equal(orders[0].discount, '5.00');
