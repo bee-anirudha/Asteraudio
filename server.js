@@ -11,7 +11,7 @@ const clients = new Set();
 const PRICE_CENTS = 4999;
 const WALLET_CENTS = 50000;
 const COUPON_CODE = 'ASTER10';
-const ORDER_ID = 'ORD-F69693418B65';
+const ORDER_ID = 'ORD-1042';
 
 function money(cents) { return (cents / 100).toFixed(2); }
 function businessDayAfter(date, count) {
